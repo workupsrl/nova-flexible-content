@@ -1,5 +1,5 @@
 {
-    "name": "whitecube/nova-flexible-content",
+    "name": "workup/nova-flexible-content",
     "description": "Flexible Content & Repeater Fields for Laravel Nova.",
     "license": "MIT",
     "keywords": [
@@ -19,12 +19,12 @@
     ],
     "require": {
         "php": ">=7.2.5",
-        "laravel/nova": "^3.2",
+        "workup/nova": "^3.2",
         "laravel/framework": "^7.0|^8.0|^9.0"
     },
     "autoload": {
         "psr-4": {
-            "Whitecube\\NovaFlexibleContent\\": "src/"
+            "Workup\\NovaFlexibleContent\\": "src/"
         }
     },
     "autoload-dev": {
@@ -32,16 +32,10 @@
             "Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
-        }
-    ],
     "extra": {
         "laravel": {
             "providers": [
-                "Whitecube\\NovaFlexibleContent\\FieldServiceProvider"
+                "Workup\\NovaFlexibleContent\\FieldServiceProvider"
             ]
         }
     },
