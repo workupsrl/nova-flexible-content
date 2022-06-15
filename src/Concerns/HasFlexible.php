@@ -1,12 +1,12 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent\Concerns;
+namespace Workup\NovaFlexibleContent\Concerns;
 
-use Whitecube\NovaFlexibleContent\Layouts\Layout;
-use Whitecube\NovaFlexibleContent\Layouts\Collection;
+use Workup\NovaFlexibleContent\Layouts\Layout;
+use Workup\NovaFlexibleContent\Layouts\Collection;
 use Illuminate\Support\Collection as BaseCollection;
 use Laravel\Nova\NovaServiceProvider;
-use Whitecube\NovaFlexibleContent\Value\FlexibleCast;
+use Workup\NovaFlexibleContent\Value\FlexibleCast;
 
 trait HasFlexible {
 

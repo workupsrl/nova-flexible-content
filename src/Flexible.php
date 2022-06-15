@@ -1,17 +1,17 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent;
+namespace Workup\NovaFlexibleContent;
 
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Whitecube\NovaFlexibleContent\Http\ScopedRequest;
-use Whitecube\NovaFlexibleContent\Value\Resolver;
-use Whitecube\NovaFlexibleContent\Value\ResolverInterface;
-use Whitecube\NovaFlexibleContent\Layouts\Preset;
-use Whitecube\NovaFlexibleContent\Layouts\Layout;
-use Whitecube\NovaFlexibleContent\Layouts\LayoutInterface;
-use Whitecube\NovaFlexibleContent\Layouts\Collection as LayoutsCollection;
+use Workup\NovaFlexibleContent\Http\ScopedRequest;
+use Workup\NovaFlexibleContent\Value\Resolver;
+use Workup\NovaFlexibleContent\Value\ResolverInterface;
+use Workup\NovaFlexibleContent\Layouts\Preset;
+use Workup\NovaFlexibleContent\Layouts\Layout;
+use Workup\NovaFlexibleContent\Layouts\LayoutInterface;
+use Workup\NovaFlexibleContent\Layouts\Collection as LayoutsCollection;
 
 class Flexible extends Field
 {

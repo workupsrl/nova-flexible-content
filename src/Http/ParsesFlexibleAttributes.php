@@ -1,9 +1,9 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent\Http;
+namespace Workup\NovaFlexibleContent\Http;
 
 use Illuminate\Http\Request;
-use Whitecube\NovaFlexibleContent\Http\FlexibleAttribute;
+use Workup\NovaFlexibleContent\Http\FlexibleAttribute;
 
 trait ParsesFlexibleAttributes
 {

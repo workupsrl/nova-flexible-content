@@ -1,6 +1,6 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent\Value;
+namespace Workup\NovaFlexibleContent\Value;
 
 use Illuminate\Support\Collection;
 

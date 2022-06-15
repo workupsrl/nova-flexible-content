@@ -1,4 +1,4 @@
-# ![Laravel Nova Flexible Content](https://github.com/whitecube/nova-flexible-content/raw/master/title.png)
+# ![Laravel Nova Flexible Content](https://github.com/workupsrl/nova-flexible-content/raw/master/title.png)
 
 An easy & complete Flexible Field for Laravel Nova, perfect for repeated and flexible field groups.
 
@@ -30,7 +30,7 @@ Layouts can be added using the following method on your Flexible fields:
 The `$name` parameter is used to store the chosen layout in the field's value. Choose it wisely, you'll probably use it to identify the layouts in your application.
 
 ```php
-use Whitecube\NovaFlexibleContent\Flexible;
+use Workup\NovaFlexibleContent\Flexible;
 
 /**
  * Get the fields displayed by the resource.
@@ -143,7 +143,7 @@ This can be done trivially by using the `FlexibleCast` class in this package:
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Whitecube\NovaFlexibleContent\Value\FlexibleCast;
+use Workup\NovaFlexibleContent\Value\FlexibleCast;
 
 class MyModel extends Model
 {
@@ -155,7 +155,7 @@ class MyModel extends Model
 
 #### Writing a custom flexible cast
 
-By default, the `FlexibleCast` class will collect basic `Layout` instances. If you want to map the layouts into [Custom Layout instances](https://github.com/whitecube/nova-flexible-content#custom-layout-classes), it is also possible. First, create a custom flexible cast by running `php artisan flexible:cast MyFlexibleCast`. This will create the file in the `App\Casts` directory.
+By default, the `FlexibleCast` class will collect basic `Layout` instances. If you want to map the layouts into [Custom Layout instances](https://github.com/workupsrl/nova-flexible-content#custom-layout-classes), it is also possible. First, create a custom flexible cast by running `php artisan flexible:cast MyFlexibleCast`. This will create the file in the `App\Casts` directory.
 
 Then easily map your custom layout classes to the proper keys:
 
@@ -199,7 +199,7 @@ By implementing the `HasFlexible` trait on your models, you can call the `flexib
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Whitecube\NovaFlexibleContent\Concerns\HasFlexible;
+use Workup\NovaFlexibleContent\Concerns\HasFlexible;
 
 class MyModel extends Model
 {
@@ -212,7 +212,7 @@ class MyModel extends Model
 }
 ```
 
-By default, the `HasFlexible` trait will collect basic `Layout` instances. If you want to map the layouts into [Custom Layout instances](https://github.com/whitecube/nova-flexible-content#custom-layout-classes), it is also possible to specify the mapping rules as follows:
+By default, the `HasFlexible` trait will collect basic `Layout` instances. If you want to map the layouts into [Custom Layout instances](https://github.com/workupsrl/nova-flexible-content#custom-layout-classes), it is also possible to specify the mapping rules as follows:
 
 ```php
 public function getFlexibleContentAttribute()
@@ -264,7 +264,7 @@ namespace App\Nova\Flexible\Layouts;
 
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Markdown;
-use Whitecube\NovaFlexibleContent\Layouts\Layout;
+use Workup\NovaFlexibleContent\Layouts\Layout;
 
 class SimpleWysiwygLayout extends Layout
 {
@@ -332,8 +332,8 @@ In addition to reusable Layout classes, you can go a step further and create `Pr
 namespace App\Nova\Flexible\Presets;
 
 use App\PageBlocks;
-use Whitecube\NovaFlexibleContent\Flexible;
-use Whitecube\NovaFlexibleContent\Layouts\Preset;
+use Workup\NovaFlexibleContent\Flexible;
+use Workup\NovaFlexibleContent\Layouts\Preset;
 
 class WysiwygPagePreset extends Preset
 {
@@ -475,7 +475,7 @@ Quick example, consider `Post` has a flexible field with a `SliderLayout`:
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Whitecube\NovaFlexibleContent\Concerns\HasFlexible;
+use Workup\NovaFlexibleContent\Concerns\HasFlexible;
 
 class Post extends Model implements HasMedia
 {
@@ -486,9 +486,9 @@ class Post extends Model implements HasMedia
 
 ```php
 use Spatie\MediaLibrary\HasMedia;
-use Whitecube\NovaFlexibleContent\Layouts\Layout;
+use Workup\NovaFlexibleContent\Layouts\Layout;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use Whitecube\NovaFlexibleContent\Concerns\HasMediaLibrary;
+use Workup\NovaFlexibleContent\Concerns\HasMediaLibrary;
 
 class SliderLayout extends Layout implements HasMedia
 {

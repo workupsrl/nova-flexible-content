@@ -2,7 +2,7 @@
 
 namespace App\Nova\Flexible\Resolvers;
 
-use Whitecube\NovaFlexibleContent\Value\ResolverInterface;
+use Workup\NovaFlexibleContent\Value\ResolverInterface;
 
 class :classname implements ResolverInterface
 {

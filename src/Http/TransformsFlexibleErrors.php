@@ -1,10 +1,10 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent\Http;
+namespace Workup\NovaFlexibleContent\Http;
 
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
-use Whitecube\NovaFlexibleContent\Flexible;
+use Workup\NovaFlexibleContent\Flexible;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
