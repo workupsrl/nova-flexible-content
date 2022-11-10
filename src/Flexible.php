@@ -9,7 +9,7 @@ use Workup\NovaFlexibleContent\Http\ScopedRequest;
 use Workup\NovaFlexibleContent\Value\Resolver;
 use Workup\NovaFlexibleContent\Value\ResolverInterface;
 use Workup\NovaFlexibleContent\Layouts\Preset;
-use Workup\NovaFlexibleContent\Layouts\Layout;
+use Workup\NovaFlexibleContent\Layouts\TranslatableLayout;
 use Workup\NovaFlexibleContent\Layouts\LayoutInterface;
 use Workup\NovaFlexibleContent\Layouts\Collection as LayoutsCollection;
 
@@ -168,12 +168,12 @@ class Flexible extends Field
         $count = count($arguments);
 
         if($count > 1) {
-            $this->registerLayout(new Layout(...$arguments));
+            $this->registerLayout(new TranslatableLayout(...$arguments));
             return $this;
         }
 
         $layout = $arguments[0];
-        
+
         if(is_string($layout) && is_a($layout, LayoutInterface::class, true)) {
             $layout = new $layout();
         }
