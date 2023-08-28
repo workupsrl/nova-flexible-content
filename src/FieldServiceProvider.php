@@ -1,15 +1,15 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent;
+namespace Workup\NovaFlexibleContent;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\ServiceProvider;
-use Whitecube\NovaFlexibleContent\Commands\CreateCast;
-use Whitecube\NovaFlexibleContent\Commands\CreateLayout;
-use Whitecube\NovaFlexibleContent\Commands\CreatePreset;
-use Whitecube\NovaFlexibleContent\Commands\CreateResolver;
-use Whitecube\NovaFlexibleContent\Http\Middleware\InterceptFlexibleAttributes;
+use Workup\NovaFlexibleContent\Commands\CreateCast;
+use Workup\NovaFlexibleContent\Commands\CreateLayout;
+use Workup\NovaFlexibleContent\Commands\CreatePreset;
+use Workup\NovaFlexibleContent\Commands\CreateResolver;
+use Workup\NovaFlexibleContent\Http\Middleware\InterceptFlexibleAttributes;
 
 class FieldServiceProvider extends ServiceProvider
 {
