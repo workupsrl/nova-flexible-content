@@ -30,8 +30,8 @@ class Resolver implements ResolverInterface
      *
      * @param  mixed  $resource
      * @param  string  $attribute
-     * @param  \Whitecube\NovaFlexibleContent\Layouts\Collection  $layouts
-     * @return \Illuminate\Support\Collection<int, \Whitecube\NovaFlexibleContent\Layouts\Layout>
+     * @param  \Workup\NovaFlexibleContent\Layouts\Collection  $layouts
+     * @return \Illuminate\Support\Collection<int, \Workup\NovaFlexibleContent\Layouts\Layout>
      */
     public function get($resource, $attribute, $layouts)
     {
