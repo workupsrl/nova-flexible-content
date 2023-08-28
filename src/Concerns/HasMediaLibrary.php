@@ -2,23 +2,23 @@
 
 namespace Workup\NovaFlexibleContent\Concerns;
 
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\MediaRepository;
-use Workup\NovaFlexibleContent\FileAdder\FileAdder;
-use Workup\NovaFlexibleContent\FileAdder\FileAdderFactory;
-use Workup\NovaFlexibleContent\Flexible;
-use Spatie\MediaLibrary\Downloaders\DefaultDownloader;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidUrl;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Collection;
+use Workup\NovaFlexibleContent\Flexible;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Workup\NovaFlexibleContent\Layouts\Layout;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Media;
-use Workup\NovaFlexibleContent\Http\ScopedRequest;
+use Workup\NovaFlexibleContent\FileAdder\FileAdder;
+use Spatie\MediaLibrary\Downloaders\DefaultDownloader;
+use Spatie\MediaLibrary\MediaCollections\MediaRepository;
+use Workup\NovaFlexibleContent\FileAdder\FileAdderFactory;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidUrl;
 
-trait HasMediaLibrary {
-
+trait HasMediaLibrary
+{
     use InteractsWithMedia;
 
     /**
@@ -26,15 +26,15 @@ trait HasMediaLibrary {
      *
      * @return \Spatie\MediaLibrary\HasMedia
      */
-    protected function getMediaModel() : HasMedia
+    public function getMediaModel(): HasMedia
     {
         $model = Flexible::getOriginModel() ?? $this->model;
 
         while ($model instanceof Layout) {
-          $model = $model->getMediaModel();
+            $model = $model->getMediaModel();
         }
 
-        if(is_null($model) || !($model instanceof HasMedia)) {
+        if (is_null($model) || ! ($model instanceof HasMedia)) {
             throw new \Exception('Origin HasMedia model not found.');
         }
 
@@ -44,11 +44,11 @@ trait HasMediaLibrary {
     /**
      * Add a file to the medialibrary.
      *
-     * @param string|\Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * @param  string|\Symfony\Component\HttpFoundation\File\UploadedFile  $file
      *
      * @return \Spatie\MediaLibrary\MediaCollections\FileAdder
      */
-    public function addMedia($file) : \Spatie\MediaLibrary\MediaCollections\FileAdder
+    public function addMedia($file): \Spatie\MediaLibrary\MediaCollections\FileAdder
     {
         return app(FileAdderFactory::class)
             ->create($this->getMediaModel(), $file, $this->getSuffix())
@@ -59,13 +59,12 @@ trait HasMediaLibrary {
      * This is a slightly altered version of Spatie's addMediaFromUrl, tweaked
      * based on the overridden addMedia method in this class.
      *
-     * @param string $url
-     * 
-     * @param string|array<string> ...$allowedMimeTypes
+     * @param  string  $url
+     * @param  string|array<string>  ...$allowedMimeTypes
      */
     public function addMediaFromUrl($url, ...$allowedMimeTypes): \Spatie\MediaLibrary\MediaCollections\FileAdder
     {
-        if (!Str::startsWith($url, ['http://', 'https://'])) {
+        if (! Str::startsWith($url, ['http://', 'https://'])) {
             throw InvalidUrl::doesNotStartWithProtocol($url);
         }
 
@@ -85,7 +84,7 @@ trait HasMediaLibrary {
 
         $mediaExtension = explode('/', mime_content_type($temporaryFile));
 
-        if (!Str::contains($filename, '.')) {
+        if (! Str::contains($filename, '.')) {
             $filename = "{$filename}.{$mediaExtension[1]}";
         }
 
@@ -94,12 +93,12 @@ trait HasMediaLibrary {
             ->usingName(pathinfo($filename, PATHINFO_FILENAME))
             ->usingFileName($filename);
     }
-    
+
     /**
      * Get media collection by its collectionName.
      *
-     * @param string $collectionName
-     * @param array|callable $filters
+     * @param  string  $collectionName
+     * @param  array|callable  $filters
      *
      * @return \Illuminate\Support\Collection
      */
@@ -108,7 +107,7 @@ trait HasMediaLibrary {
         return app(MediaRepository::class)
             ->getCollection($this->getMediaModel(), $collectionName . $this->getSuffix(), $filters);
     }
-  
+
     /**
      * Get the media collection name suffix.
      *
@@ -118,17 +117,18 @@ trait HasMediaLibrary {
     {
         return '_' . $this->inUseKey();
     }
-    
+
     /**
      * Resolve fields for display using given attributes.
      *
-     * @param array $attributes
+     * @param  array  $attributes
+     *
      * @return array
      */
     public function resolveForDisplay(array $attributes = [])
     {
         $this->fields->each(function ($field) use ($attributes) {
-            if(is_a($field, Media::class)) {
+            if (is_a($field, Media::class)) {
                 $field->resolveForDisplay($this->getMediaModel(), $field->attribute . $this->getSuffix());
             } else {
                 $field->resolveForDisplay($attributes);
@@ -142,26 +142,27 @@ trait HasMediaLibrary {
      * The default behaviour when removed
      * Should remove all related medias except if shouldDeletePreservingMedia returns true
      *
-     * @param  Flexible $flexible
-     * @param  Whitecube\NovaFlexibleContent\Layout $layout
+     * @param  Flexible  $flexible
+     * @param  Layout  $layout
      *
      * @return mixed
      */
     protected function removeCallback(Flexible $flexible, $layout)
     {
-      if ($this->shouldDeletePreservingMedia()) return;
-  
-      $collectionsToClear = config('media-library.media_model')::select('collection_name')
-        ->where('collection_name', 'like', '%' . $this->getSuffix())
-        ->distinct()
-        ->pluck('collection_name')
-        ->map(function ($value) {
-          return str_replace($this->getSuffix(), '', $value);
-        });
-  
-      foreach ($collectionsToClear as $collection) {
-        $layout->clearMediaCollection($collection);
-      }
-    }
+        if ($this->shouldDeletePreservingMedia()) {
+            return;
+        }
 
+        $collectionsToClear = config('media-library.media_model')::select('collection_name')
+            ->where('collection_name', 'like', '%' . $this->getSuffix())
+            ->distinct()
+            ->pluck('collection_name')
+            ->map(function ($value) {
+                return str_replace($this->getSuffix(), '', $value);
+            });
+
+        foreach ($collectionsToClear as $collection) {
+            $layout->clearMediaCollection($collection);
+        }
+    }
 }

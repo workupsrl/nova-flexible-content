@@ -30,6 +30,14 @@
 
                     <div class="flex" v-if="!readonly">
                         <button
+                            dusk="drag-group"
+                            type="button"
+                            class="group-control btn border-l border-gray-200 dark:border-gray-700 w-8 h-8 block nova-flexible-content-drag-button"
+                            :title="__('Drag')"
+                            >
+                            <icon type="selector" class="align-top" width="16" height="16" />
+                        </button>
+                        <button
                             dusk="move-up-group"
                             type="button"
                             class="group-control btn border-l border-gray-200 dark:border-gray-700 w-8 h-8 block"
@@ -72,9 +80,9 @@
                     :is="'form-' + item.component"
                     :resource-name="resourceName"
                     :resource-id="resourceId"
-                    :resource="resource"
                     :field="item"
                     :errors="errors"
+                    :mode="mode"
                     :show-help-text="item.helpText != null"
                     :class="{ 'remove-bottom-border': index == group.fields.length - 1 }"
                 />
@@ -84,12 +92,19 @@
 </template>
 
 <script>
-import BehavesAsPanel from '../../../vendor/laravel/nova/resources/js/mixins/BehavesAsPanel.js';
+import BehavesAsPanel from 'nova-mixins/BehavesAsPanel';
+import { mapProps } from 'laravel-nova';
 
 export default {
     mixins: [BehavesAsPanel],
 
-    props: ['errors', 'group', 'index', 'field'],
+    props: {
+        errors: {},
+        group: {},
+        index: {},
+        field: {},
+        ...mapProps(['mode'])
+    },
 
     emits: ['move-up', 'move-down', 'remove'],
 
@@ -104,20 +119,25 @@ export default {
     computed: {
         titleStyle() {
             let classes = ['border-t', 'border-r', 'border-l', 'border-gray-200', 'dark:border-gray-700', 'rounded-t-lg'];
+
             if (this.collapsed) {
                 classes.push('border-b rounded-b-lg');
             }
+
             return classes;
         },
         containerStyle() {
             let classes = ['grow', 'border-b', 'border-r', 'border-l', 'border-gray-200', 'dark:border-gray-700', 'rounded-b-lg'];
-            if(!this.group.title) {
+
+            if (! this.group.title) {
                 classes.push('border-t');
                 classes.push('rounded-tr-lg');
             }
+
             if (this.collapsed) {
                 classes.push('hidden');
             }
+
             return classes;
         }
     },
@@ -148,7 +168,7 @@ export default {
          * Confirm remove message
          */
         confirmRemove() {
-            if(this.field.confirmRemove){
+            if (this.field.confirmRemove){
                 this.removeMessage = true;
             } else {
                 this.remove()
@@ -198,10 +218,6 @@ export default {
 
     .confirm-message .text-danger {
         color: #ee3f22;
-    }
-
-    .closebtn {
-        /*color: #B7CAD6;*/
     }
 
     .rounded-l {

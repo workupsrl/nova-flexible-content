@@ -15,10 +15,13 @@ class FlexibleCast implements CastsAttributes
     protected $layouts = [];
 
     /**
-     * @var Illuminate\Database\Eloquent\Model
+     * @var \Illuminate\Database\Eloquent\Model
      */
     protected $model;
 
+    /**
+     * @return \Workup\NovaFlexibleContent\Layouts\Collection|array<\Workup\NovaFlexibleContent\Layouts\Layout>
+     */
     public function get($model, string $key, $value, array $attributes)
     {
         $this->model = $model;

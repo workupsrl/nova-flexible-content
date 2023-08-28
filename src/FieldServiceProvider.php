@@ -21,10 +21,10 @@ class FieldServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->addMiddleware();
-      
+
         Nova::serving(function (ServingNova $event) {
-            Nova::script('nova-flexible-content', __DIR__.'/../dist/js/field.js');
-            Nova::style('nova-flexible-content', __DIR__.'/../dist/css/field.css');
+            Nova::script('nova-flexible-content', __DIR__ . '/../dist/js/field.js');
+            Nova::style('nova-flexible-content', __DIR__ . '/../dist/css/field.css');
         });
     }
 
@@ -35,7 +35,9 @@ class FieldServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (!$this->app->runningInConsole()) return;
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
 
         $this->commands([
             CreateCast::class,
@@ -44,7 +46,7 @@ class FieldServiceProvider extends ServiceProvider
             CreateResolver::class,
         ]);
     }
-    
+
     /**
      * Adds required middleware for Nova requests.
      *
@@ -53,18 +55,19 @@ class FieldServiceProvider extends ServiceProvider
     public function addMiddleware()
     {
         $router = $this->app['router'];
-        
+
         if ($router->hasMiddlewareGroup('nova')) {
             $router->pushMiddlewareToGroup('nova', InterceptFlexibleAttributes::class);
-            
+
             return;
         }
-        
+
         if (! $this->app->configurationIsCached()) {
-            config()->set('nova.middleware', array_merge(
-                config('nova.middleware', []),
-                [InterceptFlexibleAttributes::class]
-            ));
+            config()->set('nova.middleware',
+                array_merge(
+                    config('nova.middleware', []),
+                    [InterceptFlexibleAttributes::class]
+                ));
         }
     }
 }

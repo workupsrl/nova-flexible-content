@@ -1,27 +1,26 @@
 <template>
     <div class="relative" v-if="layouts">
-        <div class="z-20" v-if="layouts.length > 1">
-            <div v-if="isLayoutsDropdownOpen"
-                 class="z-20 absolute rounded-lg shadow-lg max-w-full top-full mt-3 pin-b max-h-search overflow-y-auto border border-gray-100 dark:border-gray-700"
-            >
-                <div>
-                    <ul class="list-reset">
-                        <li v-for="layout in filteredLayouts" class="border-b border-gray-100 dark:border-gray-700" :key="'add-'+layout.name">
-                            <a
-                                :dusk="'add-' + layout.name"
-                                @click="addGroup(layout)"
-                                class="cursor-pointer flex items-center hover:bg-gray-50 dark:hover:bg-gray-900 block py-2 px-3 no-underline font-normal bg-white dark:bg-gray-800">
-                                <div><p class="text-90">{{ layout.title }}</p></div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div v-if="isLayoutsDropdownOpen && layouts.length > 1"
+                ref="dropdown"
+                class="z-20 absolute rounded-lg shadow-lg max-w-full max-h-search overflow-y-auto border border-40"
+                v-bind:class="dropdownClasses"
+        >
+            <ul class="list-reset">
+                <li v-for="layout in filteredLayouts" class="border-b border-gray-100 dark:border-gray-700" :key="'add-'+layout.name">
+                    <a
+                        :dusk="'add-' + layout.name"
+                        @click="addGroup(layout)"
+                        class="cursor-pointer flex items-center hover:bg-gray-50 dark:hover:bg-gray-900 block py-2 px-3 no-underline font-normal bg-white dark:bg-gray-800">
+                        <div><p class="text-90">{{ layout.title }}</p></div>
+                    </a>
+                </li>
+            </ul>
         </div>
         <default-button
             dusk="toggle-layouts-dropdown-or-add-default"
             type="button"
             tabindex="0"
+            ref="dropdownButton"
             @click="toggleLayoutsDropdownOrAddDefault"
             v-if="isBelowLayoutLimits"
         >
@@ -39,7 +38,8 @@
 
         data() {
             return {
-                isLayoutsDropdownOpen: false
+                isLayoutsDropdownOpen: false,
+                dropdownOrientation: 'bottom',
             };
         },
 
@@ -54,6 +54,15 @@
 
             isBelowLayoutLimits() {
                 return (this.limitCounter > 0 || this.limitCounter === null) && this.filteredLayouts.length > 0;
+            },
+
+            dropdownClasses() {
+                return {
+                    'mt-3': this.dropdownOrientation === 'bottom',
+                    'pin-b': this.dropdownOrientation === 'bottom',
+                    'mb-3': this.dropdownOrientation === 'top',
+                    'pin-t': this.dropdownOrientation === 'top',
+                };
             }
         },
 
@@ -68,6 +77,20 @@
                 }
 
                 this.isLayoutsDropdownOpen = !this.isLayoutsDropdownOpen;
+
+                this.$nextTick(() => {
+                    if (this.isLayoutsDropdownOpen) {
+                        const { bottom: dropdownBottom } = this.$refs.dropdown.getBoundingClientRect();
+
+                        // If the dropdown is popping out of the bottom of the window, pin it to the top of the button.
+                        if (dropdownBottom > window.innerHeight) {
+                            this.dropdownOrientation = 'top';
+                        }
+                    } else {
+                        // Reset the orientation.
+                        this.dropdownOrientation = 'bottom';
+                    }
+                });
             },
 
             /**
@@ -80,6 +103,9 @@
                 Nova.$emit('nova-flexible-content-add-group', layout);
 
                 this.isLayoutsDropdownOpen = false;
+
+                // Reset the orientation.
+                this.dropdownOrientation = 'top';
             },
         }
     }
@@ -89,5 +115,15 @@
 <style>
     .top-full {
         top: 100%
+    }
+
+    .pin-b {
+        top: 100%;
+        bottom: auto;
+    }
+
+    .pin-t {
+        top: auto;
+        bottom: 100%;
     }
 </style>

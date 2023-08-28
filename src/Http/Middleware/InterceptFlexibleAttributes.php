@@ -5,9 +5,9 @@ namespace Workup\NovaFlexibleContent\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Workup\NovaFlexibleContent\Http\ParsesFlexibleAttributes;
-use Workup\NovaFlexibleContent\Http\TransformsFlexibleErrors;
 use Workup\NovaFlexibleContent\Http\FlexibleAttribute;
+use Workup\NovaFlexibleContent\Http\TransformsFlexibleErrors;
+use Workup\NovaFlexibleContent\Http\ParsesFlexibleAttributes;
 
 class InterceptFlexibleAttributes
 {
@@ -19,11 +19,12 @@ class InterceptFlexibleAttributes
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle(Request $request, Closure $next) : Response
+    public function handle(Request $request, Closure $next): Response
     {
-        if (!$this->requestHasParsableFlexibleInputs($request)) {
+        if (! $this->requestHasParsableFlexibleInputs($request)) {
             return $next($request);
         }
 
@@ -32,7 +33,7 @@ class InterceptFlexibleAttributes
 
         $response = $next($request);
 
-        if (!$this->shouldTransformFlexibleErrors($response)) {
+        if (! $this->shouldTransformFlexibleErrors($response)) {
             return $response;
         }
 

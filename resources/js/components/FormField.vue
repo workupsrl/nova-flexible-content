@@ -1,26 +1,25 @@
 <template>
     <component
-        :dusk="field.attribute"
-        :is="field.fullWidth ? 'FullWidthField' : 'default-field'"
-        :field="field"
+        :dusk="currentField.attribute"
+        :is="currentField.fullWidth ? 'FullWidthField' : 'default-field'"
+        :field="currentField"
         :errors="errors"
-        full-width-content
-        :show-help-text="showHelpText">
+        :show-help-text="showHelpText"
+        full-width-content>
         <template #field>
 
-            <div
-                v-if="order.length > 0">
+            <div ref="flexibleFieldContainer">
                 <form-nova-flexible-content-group
                     v-for="(group, index) in orderedGroups"
-                    :dusk="field.attribute + '-' + index"
+                    :dusk="currentField.attribute + '-' + index"
                     :key="group.key"
-                    :field="field"
+                    :field="currentField"
                     :group="group"
                     :index="index"
                     :resource-name="resourceName"
                     :resource-id="resourceId"
-                    :resource="resource"
                     :errors="errors"
+                    :mode="mode"
                     @move-up="moveUp(group.key)"
                     @move-down="moveDown(group.key)"
                     @remove="remove(group.key)"
@@ -29,14 +28,13 @@
 
             <component
                 :layouts="layouts"
-                :is="field.menu.component"
-                :field="field"
+                :is="currentField.menu.component"
+                :field="currentField"
                 :limit-counter="limitCounter"
                 :limit-per-layout-counter="limitPerLayoutCounter"
                 :errors="errors"
                 :resource-name="resourceName"
                 :resource-id="resourceId"
-                :resource="resource"
                 @addGroup="addGroup($event)"
             />
 
@@ -47,19 +45,22 @@
 <script>
 
 import FullWidthField from './FullWidthField';
-import { FormField, HandlesValidationErrors } from 'laravel-nova';
+import Sortable from 'sortablejs'
+import { DependentFormField, HandlesValidationErrors, mapProps } from 'laravel-nova';
 import Group from '../group';
 
 export default {
-    mixins: [FormField, HandlesValidationErrors],
+    mixins: [HandlesValidationErrors, DependentFormField],
 
-    props: ['resourceName', 'resourceId', 'resource', 'field'],
+    props: {
+        ...mapProps(['mode']),
+    },
 
     components: { FullWidthField },
 
     computed: {
         layouts() {
-            return this.field.layouts || false
+            return this.currentField.layouts || false
         },
         orderedGroups() {
             return this.order.reduce((groups, key) => {
@@ -69,11 +70,11 @@ export default {
         },
 
         limitCounter() {
-            if (this.field.limit === null || typeof(this.field.limit) == "undefined") {
+            if (this.currentField.limit === null || typeof(this.currentField.limit) == "undefined") {
                 return null;
             }
 
-            return this.field.limit - Object.keys(this.groups).length;
+            return this.currentField.limit - Object.keys(this.groups).length;
         },
 
         limitPerLayoutCounter() {
@@ -97,8 +98,15 @@ export default {
         return {
             order: [],
             groups: {},
-            files: {}
+            files: {},
+            sortableInstance: null
         };
+    },
+
+    beforeUnmount() {
+        if (this.sortableInstance) {
+            this.sortableInstance.destroy();
+        }
     },
 
     methods: {
@@ -106,10 +114,11 @@ export default {
          * Set the initial, internal value for the field.
          */
         setInitialValue() {
-            this.value = this.field.value || [];
+            this.value = this.currentField.value || [];
             this.files = {};
 
             this.populateGroups();
+            this.$nextTick(this.initSortable.bind(this));
         },
 
         /**
@@ -136,13 +145,15 @@ export default {
                 this.files = {...this.files, ...group.files};
             }
 
-            this.appendFieldAttribute(formData, this.field.attribute);
-            formData.append(this.field.attribute, this.value.length ? JSON.stringify(this.value) : '');
+            this.appendFieldAttribute(formData, this.currentField.attribute);
+            formData.append(this.currentField.attribute, this.value.length ? JSON.stringify(this.value) : '');
 
             // Append file uploads
-            for(let file in this.files) {
+            for (let file in this.files) {
                 formData.append(file, this.files[file]);
             }
+
+            this.$nextTick(this.initSortable.bind(this));
         },
 
         /**
@@ -151,7 +162,7 @@ export default {
         appendFieldAttribute(formData, attribute) {
             let registered = [];
 
-            if(formData.has('___nova_flexible_content_fields')) {
+            if (formData.has('___nova_flexible_content_fields')) {
                 registered = JSON.parse(formData.get('___nova_flexible_content_fields'));
             }
 
@@ -182,7 +193,7 @@ export default {
                     this.getLayout(this.value[i].layout),
                     this.value[i].attributes,
                     this.value[i].key,
-                    this.field.collapsed
+                    this.currentField.collapsed
                 );
             }
         },
@@ -204,7 +215,7 @@ export default {
             collapsed = collapsed || false;
 
             let fields = attributes || JSON.parse(JSON.stringify(layout.fields)),
-                group = new Group(layout.name, layout.title, fields, this.field, key, collapsed);
+                group = new Group(layout.name, layout.title, fields, this.currentField, key, collapsed);
 
             this.groups[group.key] = group;
             this.order.push(group.key);
@@ -242,7 +253,38 @@ export default {
 
             this.order.splice(index, 1);
             delete this.groups[key];
-        }
+        },
+
+
+        initSortable() {
+            const containerRef = this.$refs['flexibleFieldContainer']
+
+            if (! containerRef || this.sortableInstance) {
+                return;
+            }
+
+            this.sortableInstance = Sortable.create(containerRef, {
+                ghostClass: 'nova-flexible-content-sortable-ghost',
+                dragClass: 'nova-flexible-content-sortable-drag',
+                chosenClass: 'nova-flexible-content-sortable-chosen',
+                direction: 'vertical',
+                handle: '.nova-flexible-content-drag-button',
+                scrollSpeed: 5,
+                animation: 500,
+                onEnd: (evt) => {
+                    const item = evt.item;
+                    const key = item.id;
+                    const oldIndex = evt.oldIndex;
+                    const newIndex = evt.newIndex;
+
+                    if (newIndex < oldIndex) {
+                        this.moveUp(key);
+                    } else if (newIndex > oldIndex) {
+                        this.moveDown(key);
+                    }
+                 }
+            });
+        },
     }
 }
 </script>
