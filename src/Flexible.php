@@ -25,7 +25,7 @@ class Flexible extends Field
     /**
      * The available layouts collection
      *
-     * @var Whitecube\NovaFlexibleContent\Layouts\Collection
+     * @var Workup\NovaFlexibleContent\Layouts\Collection
      */
     protected $layouts;
 
@@ -39,7 +39,7 @@ class Flexible extends Field
     /**
      * The field's value setter & getter
      *
-     * @var Whitecube\NovaFlexibleContent\Value\ResolverInterface
+     * @var Workup\NovaFlexibleContent\Value\ResolverInterface
      */
     protected $resolver;
 
@@ -223,7 +223,7 @@ class Flexible extends Field
     /**
      * Push a layout instance into the layouts collection
      *
-     * @param Whitecube\NovaFlexibleContent\Layouts\LayoutInterface $layout
+     * @param Workup\NovaFlexibleContent\Layouts\LayoutInterface $layout
      * @return void
      */
     protected function registerLayout(LayoutInterface $layout)
@@ -445,7 +445,7 @@ class Flexible extends Field
      * Find an existing group based on its key
      *
      * @param  string $key
-     * @return \Whitecube\NovaFlexibleContent\Layouts\Layout
+     * @return \Workup\NovaFlexibleContent\Layouts\Layout
      */
     protected function findGroup($key)
     {
@@ -459,7 +459,7 @@ class Flexible extends Field
      *
      * @param  string $layout
      * @param  string $key
-     * @return \Whitecube\NovaFlexibleContent\Layouts\Layout
+     * @return \Workup\NovaFlexibleContent\Layouts\Layout
      */
     protected function newGroup($layout, $key)
     {
@@ -597,7 +597,7 @@ class Flexible extends Field
      * Return a previously registered validation key
      *
      * @param  string $key
-     * @return null|\Whitecube\NovaFlexibleContent\Http\FlexibleAttribute
+     * @return null|\Workup\NovaFlexibleContent\Http\FlexibleAttribute
      */
     public static function getValidationKey($key)
     {
@@ -614,7 +614,7 @@ class Flexible extends Field
     {
         if (is_a($model, \Laravel\Nova\Resource::class)) {
             $model = $model->model();
-        } else if (is_a($model, \Whitecube\NovaPage\Pages\Template::class)) {
+        } else if (is_a($model, \Workup\NovaPage\Pages\Template::class)) {
             $model = $model->getOriginal();
         }
 

@@ -17,14 +17,23 @@
             "email": "toon@whitecube.be"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
     "require": {
-        "php": "^7.3|^8.0",
+        "php": ">=8.0",
         "laravel/nova": "^4.0",
         "laravel/framework": "^8.0|^9.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
     "autoload": {
         "psr-4": {
-            "Whitecube\\NovaFlexibleContent\\": "src/"
+            "Workup\\NovaFlexibleContent\\": "src/"
         }
     },
     "autoload-dev": {
@@ -32,16 +41,10 @@
             "Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
-        }
-    ],
     "extra": {
         "laravel": {
             "providers": [
-                "Whitecube\\NovaFlexibleContent\\FieldServiceProvider"
+                "Workup\\NovaFlexibleContent\\FieldServiceProvider"
             ]
         }
     },
@@ -50,9 +53,6 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "require-dev": {
-        "phpunit/phpunit": "^9.5"
-    },
     "scripts": {
         "test": "phpunit --colors=always tests"
     }

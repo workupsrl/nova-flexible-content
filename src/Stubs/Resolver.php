@@ -11,7 +11,7 @@ class :classname implements ResolverInterface
      *
      * @param  mixed  $resource
      * @param  string $attribute
-     * @param  Whitecube\NovaFlexibleContent\Layouts\Collection $layouts
+     * @param  Workup\NovaFlexibleContent\Layouts\Collection $layouts
      * @return Illuminate\Support\Collection
      */
     public function get($resource, $attribute, $layouts)
