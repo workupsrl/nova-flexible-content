@@ -1,6 +1,6 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Value;
+namespace Workup\Nova\FlexibleContent\Value;
 
 interface ResolverInterface
 {
@@ -10,8 +10,8 @@ interface ResolverInterface
      *
      * @param  mixed  $resource
      * @param  string  $attribute
-     * @param  \Workup\NovaFlexibleContent\Layouts\Collection  $layouts
-     * @return  \Illuminate\Support\Collection<array-key, \Workup\NovaFlexibleContent\Layouts\Layout>
+     * @param  \Workup\Nova\FlexibleContent\Layouts\Collection  $layouts
+     * @return  \Illuminate\Support\Collection<array-key, \Workup\Nova\FlexibleContent\Layouts\Layout>
      */
     public function get($resource, $attribute, $layouts);
 
@@ -21,7 +21,7 @@ interface ResolverInterface
      *
      * @param  mixed  $resource
      * @param  string  $attribute Attribute name set for a Flexible field.
-     * @param  \Illuminate\Support\Collection<int, \Workup\NovaFlexibleContent\Layouts\Layout>  $groups
+     * @param  \Illuminate\Support\Collection<int, \Workup\Nova\FlexibleContent\Layouts\Layout>  $groups
      * @return  mixed
      */
     public function set($resource, $attribute, $groups);

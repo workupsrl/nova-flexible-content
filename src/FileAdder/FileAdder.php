@@ -1,6 +1,6 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\FileAdder;
+namespace Workup\Nova\FlexibleContent\FileAdder;
 
 use Spatie\MediaLibrary\MediaCollections\FileAdder as OriginalFileAdder;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;

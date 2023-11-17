@@ -1,8 +1,8 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Value;
+namespace Workup\Nova\FlexibleContent\Value;
 
-use Workup\NovaFlexibleContent\Concerns\HasFlexible;
+use Workup\Nova\FlexibleContent\Concerns\HasFlexible;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class FlexibleCast implements CastsAttributes
@@ -20,7 +20,7 @@ class FlexibleCast implements CastsAttributes
     protected $model;
 
     /**
-     * @return \Workup\NovaFlexibleContent\Layouts\Collection|array<\Workup\NovaFlexibleContent\Layouts\Layout>
+     * @return \Workup\Nova\FlexibleContent\Layouts\Collection|array<\Workup\Nova\FlexibleContent\Layouts\Layout>
      */
     public function get($model, string $key, $value, array $attributes)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Commands;
+namespace Workup\Nova\FlexibleContent\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

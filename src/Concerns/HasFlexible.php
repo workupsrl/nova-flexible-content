@@ -1,12 +1,12 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Concerns;
+namespace Workup\Nova\FlexibleContent\Concerns;
 
 use Laravel\Nova\Support\Fluent;
 use Laravel\Nova\NovaServiceProvider;
-use Workup\NovaFlexibleContent\Layouts\Layout;
-use Workup\NovaFlexibleContent\Value\FlexibleCast;
-use Workup\NovaFlexibleContent\Layouts\Collection;
+use Workup\Nova\FlexibleContent\Layouts\Layout;
+use Workup\Nova\FlexibleContent\Value\FlexibleCast;
+use Workup\Nova\FlexibleContent\Layouts\Collection;
 use Illuminate\Support\Collection as BaseCollection;
 
 trait HasFlexible
@@ -17,7 +17,7 @@ trait HasFlexible
      * @param  string  $attribute
      * @param  array  $layoutMapping
      *
-     * @return \Workup\NovaFlexibleContent\Layouts\Collection
+     * @return \Workup\Nova\FlexibleContent\Layouts\Collection
      */
     public function flexible($attribute, $layoutMapping = [])
     {
@@ -32,7 +32,7 @@ trait HasFlexible
      * @param  array  $value
      * @param  array  $layoutMapping
      *
-     * @return \Workup\NovaFlexibleContent\Layouts\Collection
+     * @return \Workup\Nova\FlexibleContent\Layouts\Collection
      */
     public function cast($value, $layoutMapping = [])
     {
@@ -49,7 +49,7 @@ trait HasFlexible
      * @param  mixed  $value
      * @param  array  $layoutMapping
      *
-     * @return \Workup\NovaFlexibleContent\Layouts\Collection
+     * @return \Workup\Nova\FlexibleContent\Layouts\Collection
      */
     public function toFlexible($value, $layoutMapping = [])
     {
@@ -111,7 +111,7 @@ trait HasFlexible
      * @param  mixed  $item
      * @param  array  $layoutMapping
      *
-     * @return null|Workup\NovaFlexibleContent\Layouts\LayoutInterface
+     * @return null|Workup\Nova\FlexibleContent\Layouts\LayoutInterface
      */
     protected function getMappedLayout($item, array $layoutMapping)
     {
@@ -152,7 +152,7 @@ trait HasFlexible
      * @param  array  $attributes
      * @param  array  $layoutMapping
      *
-     * @return \Workup\NovaFlexibleContent\Layouts\LayoutInterface
+     * @return \Workup\Nova\FlexibleContent\Layouts\LayoutInterface
      */
     protected function createMappedLayout($name, $key, $attributes, array $layoutMapping)
     {

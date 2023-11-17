@@ -1,18 +1,18 @@
 <?php
 
-namespace Workup\NovaFlexibleContent;
+namespace Workup\Nova\FlexibleContent;
 
 use Laravel\Nova\Fields\Field;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Workup\NovaFlexibleContent\Value\Resolver;
-use Workup\NovaFlexibleContent\Layouts\Preset;
-use Workup\NovaFlexibleContent\Layouts\Layout;
+use Workup\Nova\FlexibleContent\Value\Resolver;
+use Workup\Nova\FlexibleContent\Layouts\Preset;
+use Workup\Nova\FlexibleContent\Layouts\Layout;
 use Laravel\Nova\Fields\SupportsDependentFields;
-use Workup\NovaFlexibleContent\Http\ScopedRequest;
-use Workup\NovaFlexibleContent\Value\ResolverInterface;
-use Workup\NovaFlexibleContent\Layouts\LayoutInterface;
-use Workup\NovaFlexibleContent\Layouts\Collection as LayoutsCollection;
+use Workup\Nova\FlexibleContent\Http\ScopedRequest;
+use Workup\Nova\FlexibleContent\Value\ResolverInterface;
+use Workup\Nova\FlexibleContent\Layouts\LayoutInterface;
+use Workup\Nova\FlexibleContent\Layouts\Collection as LayoutsCollection;
 
 class Flexible extends Field
 {
@@ -28,7 +28,7 @@ class Flexible extends Field
     /**
      * The available layouts collection
      *
-     * @var \Workup\NovaFlexibleContent\Layouts\Collection
+     * @var \Workup\Nova\FlexibleContent\Layouts\Collection
      */
     protected $layouts;
 
@@ -42,7 +42,7 @@ class Flexible extends Field
     /**
      * The field's value setter & getter
      *
-     * @var \Workup\NovaFlexibleContent\Value\ResolverInterface
+     * @var \Workup\Nova\FlexibleContent\Value\ResolverInterface
      */
     protected $resolver;
 
@@ -236,7 +236,7 @@ class Flexible extends Field
     /**
      * Push a layout instance into the layouts collection
      *
-     * @param  \Workup\NovaFlexibleContent\Layouts\LayoutInterface  $layout
+     * @param  \Workup\Nova\FlexibleContent\Layouts\LayoutInterface  $layout
      *
      * @return void
      */
@@ -477,7 +477,7 @@ class Flexible extends Field
      *
      * @param  string  $key
      *
-     * @return \Workup\NovaFlexibleContent\Layouts\Layout
+     * @return \Workup\Nova\FlexibleContent\Layouts\Layout
      */
     protected function findGroup($key)
     {
@@ -492,7 +492,7 @@ class Flexible extends Field
      * @param  string  $layout
      * @param  string  $key
      *
-     * @return null|\Workup\NovaFlexibleContent\Layouts\Layout
+     * @return null|\Workup\Nova\FlexibleContent\Layouts\Layout
      */
     protected function newGroup($layout, $key)
     {
@@ -644,7 +644,7 @@ class Flexible extends Field
      *
      * @param  string  $key
      *
-     * @return null|\Workup\NovaFlexibleContent\Http\FlexibleAttribute
+     * @return null|\Workup\Nova\FlexibleContent\Http\FlexibleAttribute
      */
     public static function getValidationKey($key)
     {

@@ -1,20 +1,20 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Concerns;
+namespace Workup\Nova\FlexibleContent\Concerns;
 
 use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
-use Workup\NovaFlexibleContent\Flexible;
+use Workup\Nova\FlexibleContent\Flexible;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Workup\NovaFlexibleContent\Layouts\Layout;
+use Workup\Nova\FlexibleContent\Layouts\Layout;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Media;
-use Workup\NovaFlexibleContent\FileAdder\FileAdder;
+use Workup\Nova\FlexibleContent\FileAdder\FileAdder;
 use Spatie\MediaLibrary\Downloaders\DefaultDownloader;
 use Spatie\MediaLibrary\MediaCollections\MediaRepository;
-use Workup\NovaFlexibleContent\FileAdder\FileAdderFactory;
+use Workup\Nova\FlexibleContent\FileAdder\FileAdderFactory;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidUrl;
 
 trait HasMediaLibrary

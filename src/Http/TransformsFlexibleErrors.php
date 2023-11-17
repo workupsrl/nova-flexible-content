@@ -1,11 +1,11 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Http;
+namespace Workup\Nova\FlexibleContent\Http;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Lang;
-use Workup\NovaFlexibleContent\Flexible;
+use Workup\Nova\FlexibleContent\Flexible;
 use Symfony\Component\HttpFoundation\Response;
 
 trait TransformsFlexibleErrors
@@ -89,7 +89,7 @@ trait TransformsFlexibleErrors
      *
      * @param  array  $messages
      * @param  string  $key
-     * @param  \Workup\NovaFlexibleContent\Http\FlexibleAttribute  $attribute
+     * @param  \Workup\Nova\FlexibleContent\Http\FlexibleAttribute  $attribute
      *
      * @return array
      */

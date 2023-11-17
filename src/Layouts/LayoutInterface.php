@@ -1,8 +1,8 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Layouts;
+namespace Workup\Nova\FlexibleContent\Layouts;
 
-use Workup\NovaFlexibleContent\Http\ScopedRequest;
+use Workup\Nova\FlexibleContent\Http\ScopedRequest;
 
 interface LayoutInterface
 {

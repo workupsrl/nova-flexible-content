@@ -1,6 +1,6 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Value;
+namespace Workup\Nova\FlexibleContent\Value;
 
 use Illuminate\Support\Collection;
 
@@ -30,8 +30,8 @@ class Resolver implements ResolverInterface
      *
      * @param  mixed  $resource
      * @param  string  $attribute
-     * @param  \Workup\NovaFlexibleContent\Layouts\Collection  $layouts
-     * @return \Illuminate\Support\Collection<int, \Workup\NovaFlexibleContent\Layouts\Layout>
+     * @param  \Workup\Nova\FlexibleContent\Layouts\Collection  $layouts
+     * @return \Illuminate\Support\Collection<int, \Workup\Nova\FlexibleContent\Layouts\Layout>
      */
     public function get($resource, $attribute, $layouts)
     {

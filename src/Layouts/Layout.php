@@ -1,6 +1,6 @@
 <?php
 
-namespace Workup\NovaFlexibleContent\Layouts;
+namespace Workup\Nova\FlexibleContent\Layouts;
 
 use ArrayAccess;
 use JsonSerializable;
@@ -9,12 +9,12 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Field;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Fields\FieldCollection;
-use Workup\NovaFlexibleContent\Flexible;
+use Workup\Nova\FlexibleContent\Flexible;
 use Illuminate\Contracts\Support\Arrayable;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Workup\NovaFlexibleContent\Http\ScopedRequest;
-use Workup\NovaFlexibleContent\Concerns\HasFlexible;
-use Workup\NovaFlexibleContent\Http\FlexibleAttribute;
+use Workup\Nova\FlexibleContent\Http\ScopedRequest;
+use Workup\Nova\FlexibleContent\Concerns\HasFlexible;
+use Workup\Nova\FlexibleContent\Http\FlexibleAttribute;
 use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 
@@ -484,7 +484,7 @@ class Layout implements LayoutInterface, JsonSerializable, ArrayAccess, Arrayabl
      * The default behaviour when removed
      *
      * @param  Flexible  $flexible
-     * @param  \Workup\NovaFlexibleContent\Layout  $layout
+     * @param  \Workup\Nova\FlexibleContent\Layout  $layout
      *
      * @return mixed
      */

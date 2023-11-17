@@ -2,7 +2,7 @@
 
 namespace App\Casts;
 
-use Workup\NovaFlexibleContent\Value\FlexibleCast;
+use Workup\Nova\FlexibleContent\Value\FlexibleCast;
 
 class :classname extends FlexibleCast
 {

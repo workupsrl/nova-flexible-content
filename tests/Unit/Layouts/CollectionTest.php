@@ -3,8 +3,8 @@
 namespace Tests\Unit\Layouts;
 
 use PHPUnit\Framework\TestCase;
-use Workup\NovaFlexibleContent\Layouts\Collection;
-use Workup\NovaFlexibleContent\Layouts\Layout;
+use Workup\Nova\FlexibleContent\Layouts\Collection;
+use Workup\Nova\FlexibleContent\Layouts\Layout;
 
 class CollectionTest extends TestCase
 {
