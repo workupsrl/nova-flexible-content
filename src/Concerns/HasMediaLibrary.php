@@ -2,20 +2,19 @@
 
 namespace Workup\Nova\FlexibleContent\Concerns;
 
-use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
 use Workup\Nova\FlexibleContent\Flexible;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Workup\Nova\FlexibleContent\Layouts\Layout;
-use Ebess\AdvancedNovaMediaLibrary\Fields\Media;
-use Workup\Nova\FlexibleContent\FileAdder\FileAdder;
+use Workup\AdvancedNovaMediaLibrary\Fields\Media;
+use Spatie\MediaLibrary\MediaCollections\FileAdder;
 use Spatie\MediaLibrary\Downloaders\DefaultDownloader;
 use Spatie\MediaLibrary\MediaCollections\MediaRepository;
 use Workup\Nova\FlexibleContent\FileAdder\FileAdderFactory;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidUrl;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\MimeTypeNotAllowed;
 
 trait HasMediaLibrary
 {
@@ -25,6 +24,7 @@ trait HasMediaLibrary
      * Return the underlying model implementing the HasMedia interface
      *
      * @return \Spatie\MediaLibrary\HasMedia
+     * @throws \Exception
      */
     public function getMediaModel(): HasMedia
     {
@@ -47,6 +47,7 @@ trait HasMediaLibrary
      * @param  string|\Symfony\Component\HttpFoundation\File\UploadedFile  $file
      *
      * @return \Spatie\MediaLibrary\MediaCollections\FileAdder
+     * @throws \Exception
      */
     public function addMedia($file): \Spatie\MediaLibrary\MediaCollections\FileAdder
     {
@@ -61,6 +62,10 @@ trait HasMediaLibrary
      *
      * @param  string  $url
      * @param  string|array<string>  ...$allowedMimeTypes
+     *
+     * @return FileAdder
+     * @throws InvalidUrl
+     * @throws MimeTypeNotAllowed
      */
     public function addMediaFromUrl($url, ...$allowedMimeTypes): \Spatie\MediaLibrary\MediaCollections\FileAdder
     {
@@ -101,6 +106,7 @@ trait HasMediaLibrary
      * @param  array|callable  $filters
      *
      * @return \Illuminate\Support\Collection
+     * @throws \Exception
      */
     public function getMedia(string $collectionName = 'default', $filters = []): Collection
     {
@@ -124,6 +130,7 @@ trait HasMediaLibrary
      * @param  array  $attributes
      *
      * @return array
+     * @throws \Exception
      */
     public function resolveForDisplay(array $attributes = [])
     {

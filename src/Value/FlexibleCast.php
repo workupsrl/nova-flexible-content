@@ -31,10 +31,16 @@ class FlexibleCast implements CastsAttributes
 
     public function set($model, string $key, $value, array $attributes)
     {
-        return collect($value)->map(fn ($item) => array_merge(
-            $item,
-            ['attributes' => collect($item['attributes'])->map(fn ($a) => is_array($a) ? json_encode($a) : $a)]
-        ));
+        return collect($value)->map(function ($item) {
+            if (is_array($item)) {
+                return array_merge(
+                    $item,
+                    ['attributes' => collect($item['attributes'])->map(fn ($a) => is_array($a) ? json_encode($a) : $a)]
+                );
+            }
+
+            return $item;
+        });
     }
 
     protected function getLayoutMapping()
