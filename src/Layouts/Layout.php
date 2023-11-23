@@ -135,9 +135,9 @@ class Layout implements LayoutInterface, JsonSerializable, ArrayAccess, Arrayabl
      * @param  string  $key
      * @param  array  $attributes
      * @param  callable|null  $removeCallbackMethod
-     * @param  int|null  $limit
      *
      * @return void
+     * @throws \Exception
      */
     public function __construct(
         $title = null,

@@ -21,6 +21,10 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/workupsrl/advanced-nova-media-library"
         }
     ],
     "require": {
@@ -31,8 +35,12 @@
     },
     "require-dev": {
         "laravel/pint": "^1.2",
+        "pestphp/pest": "^1.23",
+        "pestphp/pest-plugin-parallel": "^1.2",
         "phpunit/phpunit": "^9.5",
-        "psalm/plugin-laravel": "^2.0"
+        "psalm/plugin-laravel": "^2.0",
+        "spatie/laravel-medialibrary": "^10.0",
+        "workup/advanced-nova-media-library": "^4.1"
     },
     "autoload": {
         "psr-4": {
@@ -52,7 +60,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

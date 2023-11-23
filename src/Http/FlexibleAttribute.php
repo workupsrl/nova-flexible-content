@@ -122,7 +122,7 @@ class FlexibleAttribute
             return $this->upload;
         }
 
-        return strpos($value, static::FILE_INDICATOR) === 0;
+        return str_starts_with($value, static::FILE_INDICATOR);
     }
 
     /**
@@ -284,7 +284,7 @@ class FlexibleAttribute
 
         $group = strval($group);
 
-        if (strpos($this->original, $this->groupPrefix($group)) !== false) {
+        if (str_contains($this->original, $this->groupPrefix($group))) {
             $this->group = $group;
         }
     }
@@ -323,7 +323,7 @@ class FlexibleAttribute
     {
         $segment = trim($segment, "'\" \t\n\r\0\x0B");
 
-        if ($this->group && strpos($segment, $this->groupPrefix()) === 0) {
+        if ($this->group && str_starts_with($segment, $this->groupPrefix())) {
             return (new static($segment, $this->group))->name;
         }
 
