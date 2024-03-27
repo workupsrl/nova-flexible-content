@@ -1,18 +1,20 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent\Concerns;
+namespace Workup\Nova\FlexibleContent\Concerns;
 
-use Ebess\AdvancedNovaMediaLibrary\Fields\Media;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\Downloaders\DefaultDownloader;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Collection;
+use Workup\Nova\FlexibleContent\Flexible;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidUrl;
+use Workup\Nova\FlexibleContent\Layouts\Layout;
+use Workup\AdvancedNovaMediaLibrary\Fields\Media;
+use Spatie\MediaLibrary\MediaCollections\FileAdder;
+use Spatie\MediaLibrary\Downloaders\DefaultDownloader;
 use Spatie\MediaLibrary\MediaCollections\MediaRepository;
-use Whitecube\NovaFlexibleContent\FileAdder\FileAdderFactory;
-use Whitecube\NovaFlexibleContent\Flexible;
-use Whitecube\NovaFlexibleContent\Layouts\Layout;
+use Workup\Nova\FlexibleContent\FileAdder\FileAdderFactory;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidUrl;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\MimeTypeNotAllowed;
 
 trait HasMediaLibrary
 {
@@ -22,6 +24,7 @@ trait HasMediaLibrary
      * Return the underlying model implementing the HasMedia interface
      *
      * @return \Spatie\MediaLibrary\HasMedia
+     * @throws \Exception
      */
     protected function getUnderlyingMediaModel(): HasMedia
     {
@@ -42,7 +45,9 @@ trait HasMediaLibrary
      * Add a file to the medialibrary.
      *
      * @param  string|\Symfony\Component\HttpFoundation\File\UploadedFile  $file
+     *
      * @return \Spatie\MediaLibrary\MediaCollections\FileAdder
+     * @throws \Exception
      */
     public function addMedia($file): \Spatie\MediaLibrary\MediaCollections\FileAdder
     {
@@ -57,6 +62,10 @@ trait HasMediaLibrary
      *
      * @param  string  $url
      * @param  string|array<string>  ...$allowedMimeTypes
+     *
+     * @return FileAdder
+     * @throws InvalidUrl
+     * @throws MimeTypeNotAllowed
      */
     public function addMediaFromUrl($url, ...$allowedMimeTypes): \Spatie\MediaLibrary\MediaCollections\FileAdder
     {
@@ -95,7 +104,9 @@ trait HasMediaLibrary
      *
      * @param  string  $collectionName
      * @param  array|callable  $filters
+     *
      * @return \Illuminate\Support\Collection
+     * @throws \Exception
      */
     public function getMedia(string $collectionName = 'default', $filters = []): Collection
     {
@@ -110,14 +121,16 @@ trait HasMediaLibrary
      */
     public function getSuffix()
     {
-        return '_'.$this->inUseKey();
+        return '_' . $this->inUseKey();
     }
 
     /**
      * Resolve fields for display using given attributes.
      *
      * @param  array  $attributes
+     *
      * @return array
+     * @throws \Exception
      */
     public function resolveForDisplay(array $attributes = [])
     {
@@ -138,6 +151,7 @@ trait HasMediaLibrary
      *
      * @param  Flexible  $flexible
      * @param  Layout  $layout
+     *
      * @return mixed
      */
     protected function removeCallback(Flexible $flexible, $layout)
@@ -147,12 +161,12 @@ trait HasMediaLibrary
         }
 
         $collectionsToClear = config('media-library.media_model')::select('collection_name')
-          ->where('collection_name', 'like', '%'.$this->getSuffix())
-          ->distinct()
-          ->pluck('collection_name')
-          ->map(function ($value) {
-              return str_replace($this->getSuffix(), '', $value);
-          });
+            ->where('collection_name', 'like', '%' . $this->getSuffix())
+            ->distinct()
+            ->pluck('collection_name')
+            ->map(function ($value) {
+                return str_replace($this->getSuffix(), '', $value);
+            });
 
         foreach ($collectionsToClear as $collection) {
             $layout->clearMediaCollection($collection);

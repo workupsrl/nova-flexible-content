@@ -1,18 +1,18 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent;
+namespace Workup\Nova\FlexibleContent;
 
-use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Fields\SupportsDependentFields;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Whitecube\NovaFlexibleContent\Http\ScopedRequest;
-use Whitecube\NovaFlexibleContent\Layouts\Collection as LayoutsCollection;
-use Whitecube\NovaFlexibleContent\Layouts\Layout;
-use Whitecube\NovaFlexibleContent\Layouts\LayoutInterface;
-use Whitecube\NovaFlexibleContent\Layouts\Preset;
-use Whitecube\NovaFlexibleContent\Value\Resolver;
-use Whitecube\NovaFlexibleContent\Value\ResolverInterface;
+use Workup\Nova\FlexibleContent\Value\Resolver;
+use Workup\Nova\FlexibleContent\Layouts\Preset;
+use Workup\Nova\FlexibleContent\Layouts\Layout;
+use Laravel\Nova\Fields\SupportsDependentFields;
+use Workup\Nova\FlexibleContent\Http\ScopedRequest;
+use Workup\Nova\FlexibleContent\Value\ResolverInterface;
+use Workup\Nova\FlexibleContent\Layouts\LayoutInterface;
+use Workup\Nova\FlexibleContent\Layouts\Collection as LayoutsCollection;
 
 class Flexible extends Field
 {
@@ -28,7 +28,7 @@ class Flexible extends Field
     /**
      * The available layouts collection
      *
-     * @var \Whitecube\NovaFlexibleContent\Layouts\Collection
+     * @var \Workup\Nova\FlexibleContent\Layouts\Collection
      */
     protected $layouts;
 
@@ -42,7 +42,7 @@ class Flexible extends Field
     /**
      * The field's value setter & getter
      *
-     * @var \Whitecube\NovaFlexibleContent\Value\ResolverInterface
+     * @var \Workup\Nova\FlexibleContent\Value\ResolverInterface
      */
     protected $resolver;
 
@@ -66,6 +66,7 @@ class Flexible extends Field
      * @param  string  $name
      * @param  string|null  $attribute
      * @param  mixed|null  $resolveCallback
+     *
      * @return void
      */
     public function __construct($name, $attribute = null, $resolveCallback = null)
@@ -81,8 +82,9 @@ class Flexible extends Field
     }
 
     /**
-     * @param  string  $component The name of the component to use for the menu
+     * @param  string  $component  The name of the component to use for the menu
      * @param  array  $data
+     *
      * @return $this
      */
     public function menu($component, $data = [])
@@ -94,6 +96,7 @@ class Flexible extends Field
      * Set the button's label
      *
      * @param  string  $label
+     *
      * @return $this
      */
     public function button($label)
@@ -152,6 +155,7 @@ class Flexible extends Field
      * Set the field's resolver
      *
      * @param  mixed  $resolver
+     *
      * @return $this
      */
     public function resolver($resolver)
@@ -161,7 +165,7 @@ class Flexible extends Field
         }
 
         if (! ($resolver instanceof ResolverInterface)) {
-            throw new \Exception('Resolver Class "'.get_class($resolver).'" does not implement ResolverInterface.');
+            throw new \Exception('Resolver Class "' . get_class($resolver) . '" does not implement ResolverInterface.');
         }
 
         $this->resolver = $resolver;
@@ -173,6 +177,7 @@ class Flexible extends Field
      * Register a new layout
      *
      * @param  array  $arguments
+     *
      * @return $this
      */
     public function addLayout(...$arguments)
@@ -192,7 +197,7 @@ class Flexible extends Field
         }
 
         if (! ($layout instanceof LayoutInterface)) {
-            throw new \Exception('Layout Class "'.get_class($layout).'" does not implement LayoutInterface.');
+            throw new \Exception('Layout Class "' . get_class($layout) . '" does not implement LayoutInterface.');
         }
 
         $this->registerLayout($layout);
@@ -205,6 +210,7 @@ class Flexible extends Field
      *
      * @param  string|Preset  $class
      * @param  array  $params
+     *
      * @return $this
      */
     public function preset($class, $params = [])
@@ -230,7 +236,8 @@ class Flexible extends Field
     /**
      * Push a layout instance into the layouts collection
      *
-     * @param  \Whitecube\NovaFlexibleContent\Layouts\LayoutInterface  $layout
+     * @param  \Workup\Nova\FlexibleContent\Layouts\LayoutInterface  $layout
+     *
      * @return void
      */
     protected function registerLayout(LayoutInterface $layout)
@@ -248,6 +255,7 @@ class Flexible extends Field
      *
      * @param  mixed  $resource
      * @param  string|null  $attribute
+     *
      * @return void
      */
     public function resolve($resource, $attribute = null)
@@ -266,6 +274,7 @@ class Flexible extends Field
      *
      * @param  mixed  $resource
      * @param  string|null  $attribute
+     *
      * @return void
      */
     public function resolveForDisplay($resource, $attribute = null)
@@ -284,6 +293,7 @@ class Flexible extends Field
      *
      * @param  NovaRequest  $request
      * @param $resource
+     *
      * @return bool
      */
     public function isShownOnDetail(NovaRequest $request, $resource): bool
@@ -302,6 +312,7 @@ class Flexible extends Field
      * @param  string  $requestAttribute
      * @param  object  $model
      * @param  string  $attribute
+     *
      * @return void|\Closure
      */
     protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
@@ -334,6 +345,7 @@ class Flexible extends Field
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  string  $requestAttribute
+     *
      * @return array
      */
     protected function syncAndFillGroups(NovaRequest $request, $requestAttribute): array
@@ -374,7 +386,7 @@ class Flexible extends Field
     /**
      * Fire's the remove callbacks on the layouts
      *
-     * @param  Collection  $new_groups This should be (all) the new groups to bne compared against to find the removed groups
+     * @param  Collection  $new_groups  This should be (all) the new groups to bne compared against to find the removed groups
      */
     protected function fireRemoveCallbacks(Collection $new_groups)
     {
@@ -395,6 +407,7 @@ class Flexible extends Field
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  string  $attribute
+     *
      * @return null|array
      */
     protected function extractValue(NovaRequest $request, $attribute)
@@ -416,6 +429,7 @@ class Flexible extends Field
      * Resolve all contained groups and their fields
      *
      * @param  \Illuminate\Support\Collection  $groups
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function resolveGroups($groups)
@@ -430,6 +444,7 @@ class Flexible extends Field
      * detail views.
      *
      * @param  \Illuminate\Support\Collection  $groups
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function resolveGroupsForDisplay($groups)
@@ -445,6 +460,7 @@ class Flexible extends Field
      *
      * @param  mixed  $resource
      * @param  string  $attribute
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function buildGroups($resource, $attribute)
@@ -460,7 +476,8 @@ class Flexible extends Field
      * Find an existing group based on its key
      *
      * @param  string  $key
-     * @return \Whitecube\NovaFlexibleContent\Layouts\Layout
+     *
+     * @return \Workup\Nova\FlexibleContent\Layouts\Layout
      */
     protected function findGroup($key)
     {
@@ -474,7 +491,8 @@ class Flexible extends Field
      *
      * @param  string  $layout
      * @param  string  $key
-     * @return null|\Whitecube\NovaFlexibleContent\Layouts\Layout
+     *
+     * @return null|\Workup\Nova\FlexibleContent\Layouts\Layout
      */
     protected function newGroup($layout, $key)
     {
@@ -491,6 +509,7 @@ class Flexible extends Field
      * Get the validation rules for this field & its contained fields.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     *
      * @return array
      */
     public function getRules(NovaRequest $request)
@@ -502,6 +521,7 @@ class Flexible extends Field
      * Get the creation rules for this field & its contained fields.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     *
      * @return array|string
      */
     public function getCreationRules(NovaRequest $request)
@@ -516,6 +536,7 @@ class Flexible extends Field
      * Get the update rules for this field & its contained fields.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     *
      * @return array
      */
     public function getUpdateRules(NovaRequest $request)
@@ -531,6 +552,7 @@ class Flexible extends Field
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  string  $specificty
+     *
      * @return array
      */
     protected function getFlexibleRules(NovaRequest $request, $specificty)
@@ -563,6 +585,7 @@ class Flexible extends Field
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  array  $value
      * @param  string  $specificty
+     *
      * @return array
      */
     protected function generateRules(NovaRequest $request, $value, $specificty)
@@ -576,16 +599,17 @@ class Flexible extends Field
 
             $scope = ScopedRequest::scopeFrom($request, $item['attributes'], $item['key']);
 
-            return $group->generateRules($scope, $specificty, $this->attribute.'.'.$key);
+            return $group->generateRules($scope, $specificty, $this->attribute . '.' . $key);
         })
-                ->collapse()
-                ->all();
+            ->collapse()
+            ->all();
     }
 
     /**
      * Transform Flexible rules array into an actual validator rules array
      *
      * @param  array  $rules
+     *
      * @return array
      */
     protected function getCleanedRules(array $rules)
@@ -600,6 +624,7 @@ class Flexible extends Field
      * used for transforming validation errors later in the request cycle.
      *
      * @param  array  $rules
+     *
      * @return void
      */
     protected static function registerValidationKeys(array $rules)
@@ -609,7 +634,8 @@ class Flexible extends Field
         }, $rules);
 
         static::$validatedKeys = array_merge(
-            static::$validatedKeys, $validatedKeys
+            static::$validatedKeys,
+            $validatedKeys
         );
     }
 
@@ -617,7 +643,8 @@ class Flexible extends Field
      * Return a previously registered validation key
      *
      * @param  string  $key
-     * @return null|\Whitecube\NovaFlexibleContent\Http\FlexibleAttribute
+     *
+     * @return null|\Workup\Nova\FlexibleContent\Http\FlexibleAttribute
      */
     public static function getValidationKey($key)
     {
@@ -628,13 +655,14 @@ class Flexible extends Field
      * Registers a reference to the origin model for nested & contained fields
      *
      * @param  mixed  $model
+     *
      * @return void
      */
     protected function registerOriginModel($model)
     {
         if (is_a($model, \Laravel\Nova\Resource::class)) {
             $model = $model->model();
-        } elseif (is_a($model, \Whitecube\NovaPage\Pages\Template::class)) {
+        } elseif (is_a($model, \Workup\NovaPage\Pages\Template::class)) {
             $model = $model->getOriginal();
         }
 

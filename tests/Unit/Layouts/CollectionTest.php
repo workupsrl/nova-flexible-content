@@ -2,17 +2,12 @@
 
 namespace Tests\Unit\Layouts;
 
-use PHPUnit\Framework\TestCase;
-use Whitecube\NovaFlexibleContent\Layouts\Collection;
-use Whitecube\NovaFlexibleContent\Layouts\Layout;
+use Workup\Nova\FlexibleContent\Layouts\Layout;
+use Workup\Nova\FlexibleContent\Layouts\Collection;
 
-class CollectionTest extends TestCase
-{
-    public function testFind(): void
-    {
-        $collection = new Collection([new Layout('Foo', 'bar')]);
+test('find', function () {
+    $collection = new Collection([new Layout('Foo', 'bar')]);
 
-        $this->assertNotNull($collection->find('bar'));
-        $this->assertNull($collection->find('a-name'));
-    }
-}
+    expect($collection->find('bar'))->not->toBeNull()
+        ->and($collection->find('a-name'))->toBeNull();
+});

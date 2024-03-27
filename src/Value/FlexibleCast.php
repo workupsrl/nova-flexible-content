@@ -1,9 +1,9 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent\Value;
+namespace Workup\Nova\FlexibleContent\Value;
 
+use Workup\Nova\FlexibleContent\Concerns\HasFlexible;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Whitecube\NovaFlexibleContent\Concerns\HasFlexible;
 
 class FlexibleCast implements CastsAttributes
 {
@@ -20,7 +20,7 @@ class FlexibleCast implements CastsAttributes
     protected $model;
 
     /**
-     * @return \Whitecube\NovaFlexibleContent\Layouts\Collection|array<\Whitecube\NovaFlexibleContent\Layouts\Layout>
+     * @return \Workup\Nova\FlexibleContent\Layouts\Collection|array<\Workup\Nova\FlexibleContent\Layouts\Layout>
      */
     public function get($model, string $key, $value, array $attributes)
     {
@@ -31,7 +31,16 @@ class FlexibleCast implements CastsAttributes
 
     public function set($model, string $key, $value, array $attributes)
     {
-        return $value;
+        return collect($value)->map(function ($item) {
+            if (is_array($item)) {
+                return array_merge(
+                    $item,
+                    ['attributes' => collect($item['attributes'])->map(fn ($a) => is_array($a) ? json_encode($a) : $a)]
+                );
+            }
+
+            return $item;
+        });
     }
 
     protected function getLayoutMapping()

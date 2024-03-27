@@ -1,6 +1,6 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent\Http;
+namespace Workup\Nova\FlexibleContent\Http;
 
 use Illuminate\Support\Arr;
 
@@ -86,7 +86,7 @@ class FlexibleAttribute
      * @param  string  $group
      * @param  mixed  $key
      * @param  bool  $upload
-     * @return \Whitecube\NovaFlexibleContent\Http\FlexibleAttribute
+     * @return \Workup\Nova\FlexibleContent\Http\FlexibleAttribute
      */
     public static function make($name, $group = null, $key = null, $upload = false)
     {
@@ -122,14 +122,14 @@ class FlexibleAttribute
             return $this->upload;
         }
 
-        return strpos($value, static::FILE_INDICATOR) === 0;
+        return str_starts_with($value, static::FILE_INDICATOR);
     }
 
     /**
      * Return a FlexibleAttribute instance matching the target upload field
      *
      * @param  mixed  $value
-     * @return \Whitecube\NovaFlexibleContent\Http\FlexibleAttribute
+     * @return \Workup\Nova\FlexibleContent\Http\FlexibleAttribute
      */
     public function getFlexibleFileAttribute($value)
     {
@@ -248,7 +248,7 @@ class FlexibleAttribute
      * Return a new instance with appended key
      *
      * @param  string  $key
-     * @return \Whitecube\NovaFlexibleContent\Http\FlexibleAttribute
+     * @return \Workup\Nova\FlexibleContent\Http\FlexibleAttribute
      */
     public function nest($key)
     {
@@ -284,7 +284,7 @@ class FlexibleAttribute
 
         $group = strval($group);
 
-        if (strpos($this->original, $this->groupPrefix($group)) !== false) {
+        if (str_contains($this->original, $this->groupPrefix($group))) {
             $this->group = $group;
         }
     }
@@ -323,7 +323,7 @@ class FlexibleAttribute
     {
         $segment = trim($segment, "'\" \t\n\r\0\x0B");
 
-        if ($this->group && strpos($segment, $this->groupPrefix()) === 0) {
+        if ($this->group && str_starts_with($segment, $this->groupPrefix())) {
             return (new static($segment, $this->group))->name;
         }
 

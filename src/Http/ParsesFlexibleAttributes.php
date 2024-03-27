@@ -1,6 +1,6 @@
 <?php
 
-namespace Whitecube\NovaFlexibleContent\Http;
+namespace Workup\Nova\FlexibleContent\Http;
 
 use Illuminate\Http\Request;
 
@@ -17,18 +17,20 @@ trait ParsesFlexibleAttributes
      * Check if given request should be handled by the middleware
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return bool
      */
     protected function requestHasParsableFlexibleInputs(Request $request)
     {
         return in_array($request->method(), ['POST', 'PUT']) &&
-                is_string($request->input(FlexibleAttribute::REGISTER));
+            is_string($request->input(FlexibleAttribute::REGISTER));
     }
 
     /**
      * Transform the request's flexible values
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
     protected function getParsedFlexibleInputs(Request $request)
@@ -52,6 +54,7 @@ trait ParsesFlexibleAttributes
      * Apply JSON decode and recursively check for nested values
      *
      * @param  mixed  $value
+     *
      * @return array
      */
     protected function getParsedFlexibleValue($value)
@@ -75,6 +78,7 @@ trait ParsesFlexibleAttributes
      * Cleans & prepares a filled group
      *
      * @param  array  $group
+     *
      * @return array
      */
     protected function getParsedFlexibleGroup($group)
@@ -106,6 +110,7 @@ trait ParsesFlexibleAttributes
      * @param  string  $group
      * @param  string  $attribute
      * @param  string  $value
+     *
      * @return void
      */
     protected function fillFlexibleAttributes(&$attributes, $group, $attribute, $value)
@@ -126,7 +131,8 @@ trait ParsesFlexibleAttributes
      *
      * @param  string  $attribute
      * @param  string  $group
-     * @return \Whitecube\NovaFlexibleContent\Http\FlexibleAttribute
+     *
+     * @return \Workup\Nova\FlexibleContent\Http\FlexibleAttribute
      */
     protected function parseAttribute($attribute, $group)
     {
@@ -138,6 +144,7 @@ trait ParsesFlexibleAttributes
      *
      * @param  null|string  $value
      * @param  null|string  $group
+     *
      * @return void
      */
     protected function registerFlexibleFields($value, $group = null)
@@ -160,6 +167,7 @@ trait ParsesFlexibleAttributes
      *
      * @param  mixed  $attribute
      * @param  null|string  $group
+     *
      * @return void
      */
     protected function registerFlexibleField($attribute, $group = null)
@@ -175,6 +183,7 @@ trait ParsesFlexibleAttributes
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
      */
     protected function isFlexibleAttribute($attribute, $value)
@@ -194,7 +203,8 @@ trait ParsesFlexibleAttributes
      * Retrieve a registered flexible attribute
      *
      * @param  string  $attribute
-     * @return \Whitecube\NovaFlexibleContent\Http\FlexibleAttribute
+     *
+     * @return \Workup\Nova\FlexibleContent\Http\FlexibleAttribute
      */
     protected function getFlexibleAttribute($attribute)
     {
